@@ -1,0 +1,132 @@
+SPARQL Queries for your Ontology:
+1. List the instances of the class Actor:
+SELECT ?actor
+WHERE { ?actor rdf:type :Actor }
+#############################################################
+2. List the instances of the class Writer:
+SELECT ?writer
+WHERE { ?writer rdf:type :Writer }
+#############################################################
+
+3. List the instances of the class Director:
+SELECT ?director
+WHERE { ?director rdf:type :Director }
+#############################################################
+
+4. List the name of all Thriller movies and their directors:
+SELECT ?title ?directorName
+WHERE {
+  ?movie rdf:type :Movie ;
+         :title ?title ;
+         :hasGenre :Thriller ;
+         :hasDirector ?director .
+  ?director :name ?directorName .
+}
+#############################################################
+
+5. List the name of all Crime Thriller movies:
+SELECT ?title
+WHERE {
+  ?movie rdf:type :Movie ;
+         :title ?title ;
+         :hasGenre :Crime, :Thriller .
+}
+#############################################################
+
+6. List the male actors in a specific film (replace "Movie_Name" with the actual movie title):
+SELECT ?actorName
+WHERE {
+  :Movie_Name :hasActor ?actor .
+  ?actor :name ?actorName ;
+         :hasGenderType "Male" .
+}
+#############################################################
+
+7. How many movies have both "Action" and "Thriller" as genres?
+SELECT (COUNT(?movie) AS ?count)
+WHERE {
+  ?movie rdf:type :Movie ;
+         :hasGenre :Action, :Thriller .
+}
+#############################################################
+
+8. List all the movies written by a specific writer (replace "Writer_Name" with the actual writer name):
+SELECT ?title
+WHERE {
+  ?movie rdf:type :Movie ;
+         :title ?title ;
+         :hasWriter :Writer_Name .
+}
+#############################################################
+
+9. Find movies with a certain language (replace "Language" with the actual language):
+SELECT ?title
+WHERE {
+  ?movie rdf:type :Movie ;
+         :title ?title ;
+         :language "Language" .
+}
+#############################################################
+
+10. List the name of Actors older than 51 years:
+SELECT ?name
+WHERE {
+  ?actor rdf:type :Actor ;
+         :name ?name ;
+         :age ?age .
+  FILTER (?age > 51) 
+}
+#############################################################
+
+Proposed SPARQL Queries:
+1. Query with 2 Optional Graph Patterns:
+This query retrieves movies and optionally their directors and writers:
+SELECT ?title ?directorName ?writerName
+WHERE {
+  ?movie rdf:type :Movie ;
+         :title ?title .
+  OPTIONAL { ?movie :hasDirector ?director . ?director :name ?directorName }
+  OPTIONAL { ?movie :hasWriter ?writer . ?writer :name ?writerName }
+}
+#############################################################
+
+2. Query with 2 alternatives and conjunctions:
+This query finds movies that are either Crime Thriller or Comedy Drama:
+SELECT ?title
+WHERE {
+  { ?movie rdf:type :Movie ;
+           :title ?title ;
+           :hasGenre :Crime, :Thriller .
+  }
+  UNION
+  { ?movie rdf:type :Movie ;
+           :title ?title ;
+           :hasGenre :Comedy, :Drama .
+  } 
+}
+#############################################################
+
+3. CONSTRUCT Query:
+This query constructs triples about movies and their genres:
+CONSTRUCT {
+  ?movie :hasGenre ?genre .
+}
+WHERE {
+  ?movie rdf:type :Movie .
+  ?movie :hasGenre ?genre .
+}
+#############################################################
+
+4. ASK Query:
+This query checks if there are any movies from the year 2003:
+ASK {
+  ?movie rdf:type :Movie ;
+         :year 2003 . 
+}
+#############################################################
+
+5. DESCRIBE Query:
+This query describes the resource "Quentin_Tarantino":
+DESCRIBE :Quentin_Tarantino
+#############################################################
+
