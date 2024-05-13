@@ -1,0 +1,515 @@
+@prefix : <http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/> .
+
+<http://www.semanticweb.org/msi/ontologies/2024/4/team8_project> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/hasActor
+:hasActor rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          owl:inverseOf :isActorOf ;
+          rdfs:domain :Movie ;
+          rdfs:range :Person .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/hasDirector
+:hasDirector rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             owl:inverseOf :isDirectorOf ;
+             rdfs:domain :Movie ;
+             rdfs:range :Person .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/hasGenre
+:hasGenre rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Movie ;
+          rdfs:range :Genre .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/hasWriter
+:hasWriter rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           owl:inverseOf :isWriterOf ;
+           rdfs:domain :Movie ;
+           rdfs:range :Person .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/isActorOf
+:isActorOf rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :Person ;
+           rdfs:range :Movie .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/isDirectorOf
+:isDirectorOf rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain :Person ;
+              rdfs:range :Movie .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/isWriterOf
+:isWriterOf rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:domain :Person ;
+            rdfs:range :Movie .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/age
+:age rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:domain :Person ;
+     rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/country
+:country rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Movie ;
+         rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/hasGenderType
+:hasGenderType rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Person ;
+               rdfs:range [ rdf:type rdfs:Datatype ;
+                            owl:oneOf [ rdf:type rdf:List ;
+                                        rdf:first "Female" ;
+                                        rdf:rest [ rdf:type rdf:List ;
+                                                   rdf:first "Male" ;
+                                                   rdf:rest rdf:nil
+                                                 ]
+                                      ]
+                          ] .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/language
+:language rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Movie ;
+          rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Person ;
+      rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/nationality
+:nationality rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Person ;
+             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/title
+:title rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:domain :Movie ;
+       rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/year
+:year rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Movie ;
+      rdfs:range xsd:integer .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Actor
+:Actor rdf:type owl:Class ;
+       rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Director
+:Director rdf:type owl:Class ;
+          rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Genre
+:Genre rdf:type owl:Class ;
+       rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Movie
+:Movie rdf:type owl:Class ;
+       rdfs:subClassOf owl:Thing ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasActor ;
+                         owl:someValuesFrom :Person
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasDirector ;
+                         owl:someValuesFrom :Person
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasGenre ;
+                         owl:someValuesFrom :Genre
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasWriter ;
+                         owl:someValuesFrom :Person
+                       ] ;
+       owl:disjointWith :Person .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf owl:Thing ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :isActorOf ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :Movie
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :isDirectorOf ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :Movie
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :isWriterOf ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :Movie
+                        ] .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Writer
+:Writer rdf:type owl:Class ;
+        rdfs:subClassOf :Person .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Action
+:Action rdf:type owl:NamedIndividual ,
+                 :Genre ;
+        :hasGenderType "Male" ;
+        rdfs:label "Action"@en .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Baby_Driver
+:Baby_Driver rdf:type owl:NamedIndividual ,
+                      :Movie ;
+             :hasActor :Edgar_Wright ;
+             :hasDirector :Edgar_Wright ;
+             :hasGenre :Action ,
+                       :Crime ,
+                       :Thriller ;
+             :hasWriter :Edgar_Wright ;
+             :country "USA" ;
+             :language "English" ;
+             :title "Baby Driver" ;
+             :year 2017 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Boogie_Nights
+:Boogie_Nights rdf:type owl:NamedIndividual ,
+                        :Movie ;
+               :hasActor :Paul_Thomas_Anderson ;
+               :hasDirector :Paul_Thomas_Anderson ;
+               :hasGenre :Comedy ,
+                         :Crime ,
+                         :Drama ;
+               :hasWriter :Paul_Thomas_Anderson ;
+               :country "USA" ;
+               :language "English" ;
+               :title "Boogie Nights" ;
+               :year 1997 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Comedy
+:Comedy rdf:type owl:NamedIndividual ,
+                 :Genre ;
+        rdfs:label "Comedy"@en .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Crime
+:Crime rdf:type owl:NamedIndividual ,
+                :Genre ;
+       rdfs:label "Crime"@en .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Drama
+:Drama rdf:type owl:NamedIndividual ,
+                :Genre ;
+       rdfs:label "Drama"@en .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Edgar_Wright
+:Edgar_Wright rdf:type owl:NamedIndividual ,
+                       :Actor ,
+                       :Director ,
+                       :Writer ;
+              :isActorOf :Shaun_of_the_Dead ;
+              :isDirectorOf :Shaun_of_the_Dead ;
+              :isWriterOf :Shaun_of_the_Dead ;
+              :age 48 ;
+              :hasGenderType "Male" ;
+              :name "Edgar Wrght" ;
+              :nationality "British" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Frank_Darabont
+:Frank_Darabont rdf:type owl:NamedIndividual ,
+                         :Director ,
+                         :Writer ;
+                :isDirectorOf :The_Shawshank_Redemption ;
+                :isWriterOf :The_Shawshank_Redemption ;
+                :age 65 ;
+                :hasGenderType "Male" ;
+                :name "Frank Darabont" ;
+                :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/John_Travolta
+:John_Travolta rdf:type owl:NamedIndividual ,
+                        :Actor ;
+               :isActorOf :PulpFiction ;
+               :age 59 ;
+               :hasGenderType "Male" ;
+               :name "John Travolta" ;
+               :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Jojo_Rabbit
+:Jojo_Rabbit rdf:type owl:NamedIndividual ,
+                      :Movie ;
+             :hasActor :Taika_Waititi ;
+             :hasDirector :Taika_Waititi ;
+             :hasGenre :Comedy ,
+                       :Drama ;
+             :country "Nazi Germany" ;
+             :language "English" ;
+             :title "Jojo Rabbit" ;
+             :year 2019 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Kevin_Bacon
+:Kevin_Bacon rdf:type owl:NamedIndividual ,
+                      :Actor ;
+             :isActorOf :Mystic_River ;
+             :age 62 ;
+             :hasGenderType "Male" ;
+             :name "Kevin Bacon" ;
+             :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Kill_Bill_Vol1
+:Kill_Bill_Vol1 rdf:type owl:NamedIndividual ,
+                         :Movie ;
+                :hasActor :Lucy_Liu ,
+                          :Quentin_Tarantino ;
+                :hasGenre :Action ,
+                          :Crime ,
+                          :Thriller ;
+                :hasWriter :Uma_Thurman ;
+                :country "USA" ;
+                :language "English" ;
+                :title "Kill Bill Vol.1" ;
+                :year 2003 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Laura_Linney
+:Laura_Linney rdf:type owl:NamedIndividual ,
+                       :Actor ;
+              :isActorOf :Mystic_River ;
+              :age 60 ;
+              :hasGenderType "Female" ;
+              :name "Laura Linney" ;
+              :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Lucy_Liu
+:Lucy_Liu rdf:type owl:NamedIndividual ,
+                   :Actor ;
+          :isActorOf :Kill_Bill_Vol1 ;
+          :age 55 ;
+          :hasGenderType "Female" ;
+          :name "Lucy Liu" ;
+          :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Mark_Ruffalo
+:Mark_Ruffalo rdf:type owl:NamedIndividual ,
+                       :Actor ;
+              :isActorOf :Thor:__Ragnarok ;
+              :age 56 ;
+              :hasGenderType "Male" ;
+              :name "Mark Ruffalo" ;
+              :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Mystic_River
+:Mystic_River rdf:type owl:NamedIndividual ,
+                       :Movie ;
+              :hasActor :Kevin_Bacon ,
+                        :Laura_Linney ,
+                        :Tim_Robbins ;
+              :hasGenre :Crime ,
+                        :Thriller ;
+              :country "USA" ;
+              :language "English" ;
+              :title "Mystic River" ;
+              :year 2003 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Paul_Thomas_Anderson
+:Paul_Thomas_Anderson rdf:type owl:NamedIndividual ,
+                               :Actor ,
+                               :Director ,
+                               :Writer ;
+                      :isActorOf :Boogie_Nights ,
+                                 :There_Will_Be_Blood ;
+                      :isDirectorOf :Boogie_Nights ,
+                                    :There_Will_Be_Blood ;
+                      :isWriterOf :Boogie_Nights ,
+                                  :There_Will_Be_Blood ;
+                      :age 51 ;
+                      :hasGenderType "Male" ;
+                      :name "Paul Thomas Anderson" ;
+                      :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/PulpFiction
+:PulpFiction rdf:type owl:NamedIndividual ,
+                      :Movie ;
+             :hasActor :Uma_Thurman ;
+             :hasDirector :Quentin_Tarantino ;
+             :hasGenre :Crime ,
+                       :Thriller ;
+             :hasWriter :Quentin_Tarantino ;
+             :country "USA" ;
+             :language "English" ;
+             :title "Pulp Fiction" ;
+             :year 1994 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Quentin_Tarantino
+:Quentin_Tarantino rdf:type owl:NamedIndividual ,
+                            :Actor ,
+                            :Director ,
+                            :Writer ;
+                   :isActorOf :Kill_Bill_Vol1 ;
+                   :isDirectorOf :PulpFiction ;
+                   :isWriterOf :PulpFiction ;
+                   :age 53 ;
+                   :hasGenderType "Male" ;
+                   :name "Quentin Tarantino" ;
+                   :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Shaun_of_the_Dead
+:Shaun_of_the_Dead rdf:type owl:NamedIndividual ,
+                            :Movie ;
+                   :hasGenre :Comedy ,
+                             :Thriller ;
+                   :country "British" ;
+                   :language "English" ;
+                   :title "Shaun of the Dead" ;
+                   :year 2004 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Taika_Waititi
+:Taika_Waititi rdf:type owl:NamedIndividual ,
+                        :Actor ,
+                        :Director ;
+               :isActorOf :Jojo_Rabbit ;
+               :isDirectorOf :Jojo_Rabbit ,
+                             :Thor:__Ragnarok ;
+               :age 47 ;
+               :hasGenderType "Male" ;
+               :name "Taika Waititi" ;
+               :nationality "New Zealand" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/The_Shawshank_Redemption
+:The_Shawshank_Redemption rdf:type owl:NamedIndividual ,
+                                   :Movie ;
+                          :hasActor :Tim_Robbins ;
+                          :hasDirector :Frank_Darabont ;
+                          :hasGenre :Crime ,
+                                    :Drama ;
+                          :country "USA" ;
+                          :language "English" ;
+                          :title "The Shawshank Redemption" ;
+                          :year 1994 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/There_Will_Be_Blood
+:There_Will_Be_Blood rdf:type owl:NamedIndividual ,
+                              :Movie ;
+                     :hasActor :Paul_Thomas_Anderson ;
+                     :hasDirector :Paul_Thomas_Anderson ;
+                     :hasGenre :Drama ;
+                     :hasWriter :Paul_Thomas_Anderson ;
+                     :country "USA" ;
+                     :language "English" ;
+                     :title "There Will Be Blood" ;
+                     :year 2007 .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Thriller
+:Thriller rdf:type owl:NamedIndividual ,
+                   :Genre ;
+          rdfs:label "Thriller"@en .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Tim_Robbins
+:Tim_Robbins rdf:type owl:NamedIndividual ,
+                      :Actor ;
+             :isActorOf :Mystic_River ,
+                        :The_Shawshank_Redemption ;
+             :age 57 ;
+             :hasGenderType "Male" ;
+             :name "Tim Robbins" ;
+             :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Uma_Thurman
+:Uma_Thurman rdf:type owl:NamedIndividual ,
+                      :Actor ,
+                      :Writer ;
+             :isActorOf :PulpFiction ;
+             :isWriterOf :Kill_Bill_Vol1 ;
+             :age 43 ;
+             :hasGenderType "Female" ;
+             :name "Uma Thurman" ;
+             :nationality "American" .
+
+
+###  http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/Thor:__Ragnarok
+:Thor:__Ragnarok rdf:type owl:NamedIndividual ,
+                          :Movie ;
+                 :hasActor :Mark_Ruffalo ,
+                           :Taika_Waititi ;
+                 :hasDirector :Taika_Waititi ;
+                 :hasGenre :Action ,
+                           :Thriller ;
+                 :country "USA" ;
+                 :language "English" ;
+                 :title "Thor: Ragnarok" ;
+                 :year 2017 .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
