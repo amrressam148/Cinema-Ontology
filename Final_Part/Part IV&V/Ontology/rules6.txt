@@ -1,0 +1,8 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://www.semanticweb.org/msi/ontologies/2024/4/team8_project/> . 
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+[rule1: (?per rdf:type :Actor)  (?per :age ?age)  lessThan(?age, 55)-> (?per rdf:type :PersonAge)]
+[rule2: (?per rdf:type :Actor)   (?per :hasGenderType "Male")-> (?per rdf:type :ActorMale)]
+[rule3: (?per rdf:type :Movie)   (?per :language "English") -> (?per rdf:type :EnglishMovie)]
